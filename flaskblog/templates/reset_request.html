@@ -1,0 +1,37 @@
+{%extends 'layout.html'%} {%block content%}
+<div class="content-section">
+    <form action="" method="POST">
+        <!-- csrf token -->
+        {{ form.hidden_tag() }}
+
+        <!-- email to send the password reset  -->
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> Reset Password </legend>
+
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                <!-- create warning that user enter wrong data  -->
+                {% if form.email.errors %}
+                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <!-- normal data -->
+                {{ form.email(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+
+        <small class="text-muted ml-2">
+            <a href="{{ url_for('users.login') }}">or log_in</a>
+        </small>
+    </form>
+</div>
+{%endblock content%}

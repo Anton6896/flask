@@ -1,0 +1,79 @@
+{%extends 'layout.html'%} {%block content%}
+<div class="content-section">
+    <div class="media">
+        <!-- load image from the account function  -->
+        <img class="rounded-circle account-img" src="{{ image_file }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ current_user.username }}</h2>
+            <p class="text-secondary">{{ current_user.email }}</p>
+        </div>
+    </div>
+
+    <!-- don't forget for the enctype -->
+    <form action="" method="POST" enctype="multipart/form-data">
+        <!-- csrf token -->
+        {{ form.hidden_tag() }}
+
+        <!-- field set from the forms.py -->
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> update info </legend>
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
+                <!-- create warning that user enter wrong data  -->
+                {% if form.username.errors %}
+                {{ form.username(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <!-- normal data -->
+                {{ form.username(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.picture.label() }}
+                {{ form.picture(class="form-control_file") }}
+
+                {% if form.picture.errors %}
+                {% for element in form.picture.errors %}
+                <span class="text-danger"> {{ element }} </span><br>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                <!-- create warning that user enter wrong data  -->
+                {% if form.email.errors %}
+                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <!-- normal data -->
+                {{ form.email(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+        </fieldset>
+
+
+        <button type="button" class="btn btn-sm m-1 ">{{ form.submit(class="btn btn-primary") }}</button>
+
+        <a class="mr-2" href="{{ url_for('users.user_posts', username=current_user.username) }}">
+            <button type="button" class="btn btn-primary btn-sm m-1 ">my posts </button>
+        </a>
+
+    </form>
+
+
+
+
+</div>
+
+{%endblock content%}
